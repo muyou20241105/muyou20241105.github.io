@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>福牧會 - 活動照片</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gallery-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 1rem;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: white;
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .gallery-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/title.jpg" alt="教堂標誌">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="about.html">關於我們</a></li>
+                    <li><a href="donation.html">我要捐款</a></li>
+                    <li><a href="services.html">堂區服務</a></li>
+                    <li><a href="https://www.catholic.org.tw" target="_blank">中華會省慈幼會</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> 返回首頁
+    </a>
+
+    <div class="gallery-container">
+        <h1 class="page-title">福牧會 活動照片</h1>
+        <p class="gallery-description">福牧會致力於推動堂區的福傳工作，透過各種活動和服務，將天主的愛傳遞給更多人，並協助教友們在信仰生活中成長。</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="images/福牧會/1.jpg" alt="福傳活動">
+                <div class="gallery-overlay">
+                    <h3>福傳活動</h3>
+                    <p>福牧會成員在社區進行福傳活動</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/福牧會/2.jpg" alt="信仰分享">
+                <div class="gallery-overlay">
+                    <h3>信仰分享</h3>
+                    <p>教友們分享信仰生活經驗</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/福牧會/3.jpg" alt="社區服務">
+                <div class="gallery-overlay">
+                    <h3>社區服務</h3>
+                    <p>福牧會組織的社區關懷活動</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/福牧會/4.jpg" alt="靈修活動">
+                <div class="gallery-overlay">
+                    <h3>靈修活動</h3>
+                    <p>定期舉辦的靈修聚會</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/福牧會/5.jpg" alt="福傳培訓">
+                <div class="gallery-overlay">
+                    <h3>福傳培訓</h3>
+                    <p>福傳技巧培訓課程</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 XXX教堂. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移除原本的動態載入腳本
+    </script>
+</body>
+</html> 

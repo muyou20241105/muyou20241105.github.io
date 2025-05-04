@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兒童主日學 - 活動照片</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gallery-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 1rem;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: white;
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .gallery-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/title.jpg" alt="教堂標誌">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="about.html">關於我們</a></li>
+                    <li><a href="donation.html">我要捐款</a></li>
+                    <li><a href="services.html">堂區服務</a></li>
+                    <li><a href="https://www.catholic.org.tw" target="_blank">中華會省慈幼會</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> 返回首頁
+    </a>
+
+    <div class="gallery-container">
+        <h1 class="page-title">兒童主日學 活動照片</h1>
+        <p class="gallery-description">兒童主日學是我們教堂的重要活動之一，透過生動活潑的方式，讓孩子們認識天主，學習聖經故事，並在歡樂的氛圍中成長。</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="images/Sunday_School/1.jpg" alt="主日學課程">
+                <div class="gallery-overlay">
+                    <h3>主日學課程</h3>
+                    <p>孩子們專注地參與主日學課程</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/Sunday_School/2.jpg" alt="聖經故事時間">
+                <div class="gallery-overlay">
+                    <h3>聖經故事時間</h3>
+                    <p>老師生動地講述聖經故事</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/Sunday_School/3.jpg" alt="手工藝活動">
+                <div class="gallery-overlay">
+                    <h3>手工藝活動</h3>
+                    <p>孩子們製作與信仰相關的手工藝品</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/Sunday_School/4.jpg" alt="團體活動">
+                <div class="gallery-overlay">
+                    <h3>團體活動</h3>
+                    <p>主日學的團體互動遊戲時間</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/Sunday_School/5.jpg" alt="節慶慶祝">
+                <div class="gallery-overlay">
+                    <h3>節慶慶祝</h3>
+                    <p>特殊節日的歡樂慶祝活動</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 XXX教堂. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移除原本的動態載入腳本
+    </script>
+</body>
+</html> 

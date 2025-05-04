@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁 - 教堂翻修計畫</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-item p {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .mass-schedule {
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .mass-schedule p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            background: var(--light-bg);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto 0;
+        }
+
+        .contact-item {
+            padding: 1rem;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/title.jpg" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="about.html">關於我們</a></li>
+                    <li><a href="donation.html">我要捐款</a></li>
+                    <li><a href="https://www.catholic.org.tw" target="_blank">中華會省慈幼會</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>教堂翻修計畫</h1>
+            <p class="subtitle">共同參與，讓我們的教堂煥然一新</p>
+            <div class="cta-buttons">
+                <a href="donation.html" class="btn-secondary">查看進度</a>
+                <a href="donation.html" class="btn-primary">立即捐款</a>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="intro-section">
+            <div class="section-container">
+                <div class="content-block outer-block">
+                    <h2 class="main-title">神父的話</h2>
+                    <div class="content-block inner-block">
+                        <div class="intro-text">
+                            <p>鮑思高慈幼會是天主教會內的一個修會團體，由聖若望鮑思高神父於1859年創立。本會以教育及牧養青年為主要使命，特別關注處境困難的青年。</p>
+                            <p>欲了解更多資訊，歡迎瀏覽<a href="https://www.catholic.org.tw" class="special-link">中華會省慈幼會官方網站</a>。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="activities">
+            <div class="section-container">
+                <div class="content-block outer-block">
+                    <h2>活動剪影</h2>
+                    <div class="activities-grid">
+                        <a href="gallery-sunday-school.html" class="activity-card">
+                            <div class="activity-image">
+                                <img src="images/Sunday_school/cover.jpg" alt="兒童主日學">
+                                <div class="activity-overlay">
+                                    <span class="view-more">查看更多照片</span>
+                                </div>
+                            </div>
+                            <div class="activity-caption">
+                                <h3>兒童主日學</h3>
+                            </div>
+                        </a>
+                        <a href="gallery-elderly.html" class="activity-card">
+                            <div class="activity-image">
+                                <img src="images/長青會/cover.jpg" alt="長青會">
+                                <div class="activity-overlay">
+                                    <span class="view-more">查看更多照片</span>
+                                </div>
+                            </div>
+                            <div class="activity-caption">
+                                <h3>長青會</h3>
+                            </div>
+                        </a>
+                        <a href="gallery-pastoral.html" class="activity-card">
+                            <div class="activity-image">
+                                <img src="images/福牧會/cover.jpg" alt="福牧會">
+                                <div class="activity-overlay">
+                                    <span class="view-more">查看更多照片</span>
+                                </div>
+                            </div>
+                            <div class="activity-caption">
+                                <h3>福牧會</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-block outer-block">
+        <h2 class="section-title">堂區服務</h2>
+        <section class="services-grid">
+            <div class="service-item">
+                <i class="fas fa-cross"></i>
+                <h3>彌撒時間</h3>
+                <div class="mass-schedule">
+                    <p><strong>主日彌撒：</strong>上午 8:00 / 10:00</p>
+                    <p><strong>平日彌撒：</strong>週一至週六 上午 6:30</p>
+                    <p><strong>特殊節日：</strong>請參考堂區公告</p>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <i class="fas fa-praying-hands"></i>
+                <h3>和好聖事</h3>
+                <p>主日彌撒前30分鐘</p>
+                <p>或請與神父預約時間</p>
+            </div>
+
+            <div class="service-item">
+                <i class="fas fa-heart"></i>
+                <h3>婚配聖事</h3>
+                <p>請至少提前六個月與堂區聯繫</p>
+                <p>需參加婚前輔導課程</p>
+            </div>
+
+            <div class="service-item">
+                <i class="fas fa-baby"></i>
+                <h3>聖洗聖事</h3>
+                <p>嬰兒洗禮：請與堂區辦公室聯繫</p>
+                <p>成人慕道：每年九月開課</p>
+            </div>
+
+            <div class="service-item">
+                <i class="fas fa-hands-helping"></i>
+                <h3>關懷服務</h3>
+                <p>病人傅油：請與堂區聯繫</p>
+                <p>送聖體：為行動不便教友服務</p>
+                <p>喪葬禮儀：請與堂區辦公室聯繫</p>
+            </div>
+
+            <div class="service-item">
+                <i class="fas fa-users"></i>
+                <h3>信仰團體</h3>
+                <p>聖母軍</p>
+                <p>聖詠團</p>
+                <p>青年會</p>
+                <p>兒童主日學</p>
+            </div>
+            </div>
+        </section>
+
+        <section class="contact-info">
+            <h2>聯絡資訊</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>地址</h3>
+                    <p>70175 台南市東區裕農三街1 號</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <h3>電話</h3>
+                    <p>TEL: 331-0412</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h3>電子郵件</h3>
+                    <p>mail: aquino12@gmail.com</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 XXX教堂. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
