@@ -288,7 +288,8 @@ h2 {
 }
 
 .progress-fill {
-    width: 30%;
+    /* 調整進度條需與下的progressFill一起調整 */
+    width: 32.7%;  
     height: 100%;
     background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     position: absolute;
@@ -301,13 +302,15 @@ h2 {
 
 @keyframes progressFill {
     from { width: 0; }
-    to { width: 30%; }
+    /* 調整進度條需要與上面的progress-fill同步 */
+    to { width: 32.7%; }
 }
 
 .progress-percentage {
     position: absolute;
     top: 50%;
-    left: 30%;
+    /* 調整百分比文字位置 */
+    left: 27%;
     transform: translate(-50%, -50%);
     color: var(--white);
     font-weight: bold;
@@ -429,19 +432,6 @@ h2 {
     100% {
         transform: translateX(-50%) translateZ(0) scaleY(1);
     }
-}
-
-.progress-marker {
-    position: absolute;
-    top: -25px;
-    left: 30%;
-    transform: translateX(-50%);
-    background: var(--primary-color);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    font-weight: bold;
 }
 
 .progress-info {
