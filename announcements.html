@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>堂區公告 - 聖母進教之佑堂</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .announcements-page {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .announcements-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid var(--light-bg);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .announcements-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .announcement-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .announcement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .announcement-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .announcement-title {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .announcement-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            flex-wrap: wrap;
+        }
+
+        .announcement-category {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .announcement-date {
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .announcement-content {
+            padding: 1.5rem;
+        }
+
+        .announcement-excerpt {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .announcement-footer {
+            padding: 1rem 1.5rem;
+            background: var(--light-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        .announcement-priority {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .priority-high {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .priority-medium {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .priority-normal {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+
+        .no-announcements {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-color);
+        }
+
+        .no-announcements i {
+            font-size: 3rem;
+            color: var(--light-bg);
+            margin-bottom: 1rem;
+        }
+
+        /* 模態框樣式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid var(--light-bg);
+            position: relative;
+        }
+
+        .modal-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-category {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .modal-date {
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .modal-priority {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--light-bg);
+            color: var(--primary-color);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-content-text {
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 1rem;
+            white-space: pre-line;
+        }
+
+        .modal-footer {
+            padding: 1rem 2rem 2rem;
+            border-top: 1px solid var(--light-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-secondary {
+            background: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .modal-btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--light-bg);
+            background: white;
+            color: var(--text-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn.active,
+        .pagination-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .announcements-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .category-filters {
+                justify-content: center;
+            }
+
+            .announcement-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .announcement-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .modal-header,
+            .modal-body,
+            .modal-footer {
+                padding: 1.5rem;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .modal-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="images/Title.jpg" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="about.html">關於我們</a></li>
+                    <li><a href="announcements.html">堂區公告</a></li>
+                    <li><a href="donation.html">我要捐款</a></li>
+                    <li><a href="https://www.catholic.org.tw" target="_blank">中華會省慈幼會</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="announcements-page">
+            <div class="page-header">
+                <h1>堂區公告</h1>
+                <p>最新消息、活動資訊與重要通知</p>
+            </div>
+
+            <div class="announcements-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="搜尋公告...">
+                </div>
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">全部</button>
+                    <button class="category-btn" data-category="activity">活動資訊</button>
+                    <button class="category-btn" data-category="mass">彌撒時間</button>
+                    <button class="category-btn" data-category="service">服務通知</button>
+                    <button class="category-btn" data-category="maintenance">維護公告</button>
+                    <button class="category-btn" data-category="important">重要通知</button>
+                </div>
+            </div>
+
+            <div class="announcements-grid" id="announcementsGrid">
+                <!-- 公告卡片將由 JavaScript 動態生成 -->
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- 分頁按鈕將由 JavaScript 動態生成 -->
+            </div>
+        </div>
+
+        <!-- 模態框 -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-meta">
+                        <span class="modal-category" id="modalCategory"></span>
+                        <span class="modal-date" id="modalDate"></span>
+                        <span class="modal-priority" id="modalPriority"></span>
+                    </div>
+                    <button class="modal-close" id="modalClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-content-text" id="modalContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-primary" id="modalCloseBtn">
+                        <i class="fas fa-check"></i> 關閉
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 聖母進教之佑天主堂. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 公告數據
+        const announcements = [
+            {
+                id: 1,
+                title: "2024年聖誕節彌撒時間安排",
+                category: "mass",
+                priority: "medium",
+                date: "2024-12-20",
+                excerpt: "聖誕節即將來臨，堂區特別安排多場彌撒供教友參與。平安夜晚上8點舉行子夜彌撒，聖誕節當天上午8點、10點舉行彌撒...",
+                content: "詳細的聖誕節彌撒時間安排如下：\n\n平安夜（12月24日）：\n- 晚上8:00 子夜彌撒\n\n聖誕節（12月25日）：\n- 上午8:00 彌撒\n- 上午10:00 彌撒\n\n歡迎各位教友踴躍參與，共同慶祝救主耶穌基督的誕生。"
+            },
+            {
+                id: 2,
+                title: "教堂翻修工程進度報告",
+                category: "maintenance",
+                priority: "high",
+                date: "2024-12-18",
+                excerpt: "教堂翻修工程目前已完成70%，預計明年2月完工。施工期間請教友注意安全，並配合工作人員的指示...",
+                content: "教堂翻修工程進度報告：\n\n目前進度：70%\n預計完工：2025年2月\n\n已完成項目：\n- 外牆修復\n- 屋頂防水工程\n- 內部粉刷\n\n進行中項目：\n- 音響系統更新\n- 照明設備安裝\n- 座椅更換\n\n請教友在施工期間注意安全，並配合工作人員的指示。"
+            },
+            {
+                id: 3,
+                title: "2025年慕道班開課通知",
+                category: "service",
+                priority: "normal",
+                date: "2024-12-15",
+                excerpt: "2025年慕道班將於1月15日開課，歡迎有意認識天主教信仰的朋友報名參加。課程為期一年，每週三晚上7點上課...",
+                content: "2025年慕道班開課通知：\n\n開課時間：2025年1月15日\n上課時間：每週三晚上7:00-9:00\n課程期間：一年\n\n課程內容：\n- 天主教基本教理\n- 聖經導讀\n- 教會歷史\n- 禮儀參與\n\n報名方式：\n請與堂區辦公室聯繫或填寫報名表\n\n歡迎有意認識天主教信仰的朋友踴躍報名參加。"
+            },
+            {
+                id: 4,
+                title: "聖母軍週年慶祝活動",
+                category: "activity",
+                priority: "normal",
+                date: "2024-12-12",
+                excerpt: "聖母軍將於本週六舉行週年慶祝活動，包括感恩彌撒、聚餐和分享會。歡迎所有聖母軍成員及教友參加...",
+                content: "聖母軍週年慶祝活動：\n\n日期：12月21日（週六）\n時間：下午2:00開始\n\n活動內容：\n- 感恩彌撒\n- 聚餐\n- 分享會\n- 團體遊戲\n\n地點：堂區活動中心\n\n歡迎所有聖母軍成員及教友參加，共同慶祝聖母軍的成長與服務。"
+            },
+            {
+                id: 5,
+                title: "堂區辦公室聖誕節假期安排",
+                category: "important",
+                priority: "medium",
+                date: "2024-12-10",
+                excerpt: "堂區辦公室將於12月24日下午2點開始放假，12月26日恢復正常辦公。緊急事務請聯繫值班神父...",
+                content: "堂區辦公室聖誕節假期安排：\n\n放假時間：\n- 12月24日下午2:00開始\n- 12月25日全天\n- 12月26日上午9:00恢復辦公\n\n緊急事務聯繫：\n請聯繫值班神父或撥打緊急聯絡電話\n\n祝各位教友聖誕節快樂！"
+            },
+            {
+                id: 6,
+                title: "兒童主日學聖誕節特別活動",
+                category: "activity",
+                priority: "normal",
+                date: "2024-12-08",
+                excerpt: "兒童主日學將於聖誕節期間舉辦特別活動，包括聖誕故事劇場、手工藝製作和聖誕歌曲演唱...",
+                content: "兒童主日學聖誕節特別活動：\n\n活動時間：12月22日（週日）\n活動內容：\n- 聖誕故事劇場\n- 手工藝製作\n- 聖誕歌曲演唱\n- 聖誕禮物交換\n\n適合年齡：3-12歲兒童\n\n歡迎家長陪同孩子參加，共同慶祝聖誕節。"
+            }
+        ];
+
+        // 當前顯示的公告
+        let currentAnnouncements = [...announcements];
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        // 渲染公告卡片
+        function renderAnnouncements() {
+            const grid = document.getElementById('announcementsGrid');
+            
+            if (currentAnnouncements.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-announcements">
+                        <i class="fas fa-bullhorn"></i>
+                        <h3>沒有找到相關公告</h3>
+                        <p>請嘗試其他搜尋條件或分類</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = currentAnnouncements.map(announcement => `
+                <div class="announcement-card">
+                    <div class="announcement-header">
+                        <div>
+                            <h3 class="announcement-title">${announcement.title}</h3>
+                            <div class="announcement-meta">
+                                <span class="announcement-category">${getCategoryName(announcement.category)}</span>
+                                <span class="announcement-date">${formatDate(announcement.date)}</span>
+                            </div>
+                        </div>
+                        <span class="announcement-priority priority-${announcement.priority}">
+                            ${getPriorityName(announcement.priority)}
+                        </span>
+                    </div>
+                    <div class="announcement-content">
+                        <p class="announcement-excerpt">${announcement.excerpt}</p>
+                    </div>
+                    <div class="announcement-footer">
+                        <a href="#" class="read-more" onclick="showAnnouncementDetail(${announcement.id})">
+                            閱讀全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 獲取分類名稱
+        function getCategoryName(category) {
+            const categories = {
+                'activity': '活動資訊',
+                'mass': '彌撒時間',
+                'service': '服務通知',
+                'maintenance': '維護公告',
+                'important': '重要通知'
+            };
+            return categories[category] || category;
+        }
+
+        // 獲取優先級名稱
+        function getPriorityName(priority) {
+            const priorities = {
+                'high': '重要',
+                'medium': '一般',
+                'normal': '普通'
+            };
+            return priorities[priority] || priority;
+        }
+
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('zh-TW', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // 篩選公告
+        function filterAnnouncements() {
+            currentAnnouncements = announcements.filter(announcement => {
+                const matchesCategory = currentCategory === 'all' || announcement.category === currentCategory;
+                const matchesSearch = announcement.title.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                                    announcement.excerpt.toLowerCase().includes(currentSearch.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+            renderAnnouncements();
+        }
+
+        // 顯示公告詳情
+        function showAnnouncementDetail(id) {
+            const announcement = announcements.find(a => a.id === id);
+            if (announcement) {
+                // 填充模態框內容
+                document.getElementById('modalTitle').textContent = announcement.title;
+                document.getElementById('modalCategory').textContent = getCategoryName(announcement.category);
+                document.getElementById('modalDate').textContent = formatDate(announcement.date);
+                document.getElementById('modalContent').textContent = announcement.content;
+                
+                // 設置優先級樣式
+                const priorityElement = document.getElementById('modalPriority');
+                priorityElement.textContent = getPriorityName(announcement.priority);
+                priorityElement.className = `modal-priority priority-${announcement.priority}`;
+                
+                // 顯示模態框
+                const modal = document.getElementById('modalOverlay');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止背景滾動
+            }
+        }
+
+        // 關閉模態框
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢復背景滾動
+        }
+
+
+
+        // 事件監聽器
+        document.addEventListener('DOMContentLoaded', function() {
+            // 搜尋功能
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                currentSearch = e.target.value;
+                filterAnnouncements();
+            });
+
+            // 分類篩選
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.dataset.category;
+                    filterAnnouncements();
+                });
+            });
+
+            // 模態框關閉事件
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+            document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+            
+            // 點擊背景關閉模態框
+            document.getElementById('modalOverlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // ESC鍵關閉模態框
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // 初始渲染
+            renderAnnouncements();
+        });
+    </script>
+</body>
+</html> 
